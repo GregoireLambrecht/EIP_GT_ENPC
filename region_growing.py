@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from image_processing import *
 
+local_path = "C:/Users/micah/Desktop/Ponts 2a/PROJET IMI/EIT_GT_ENPC/"
 
 #ATTENTION ////////////////////////////////////////////////////////////////////
 #YOU HAVE TO RUN image_processing.py before runing this file
@@ -52,14 +54,14 @@ def segmentation(img, show = True):
 ###############################################################################
 ###############################################################################              
 # Load image as grayscale
-img = cv2.imread("C:/Users/grego/github/EIT_GT_ENPC/6.jpeg", cv2.IMREAD_GRAYSCALE) 
+img = cv2.imread(local_path + "raw/achilles tendon rupture/6.jpeg", cv2.IMREAD_GRAYSCALE)
 #put a filter
 img = threshold(img,110)
 
 plt.imshow(img)
 
 #segmentation
-n_img,labels,stats,  centroids = segmentationbis(img)
+n_img,labels,stats,  centroids = segmentation(img)
 
 print(len(centroids))
 

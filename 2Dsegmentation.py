@@ -1,5 +1,8 @@
 import numpy as np 
 import cv2
+from region_growing import *
+
+local_path = "C:/Users/micah/Desktop/Ponts 2a/PROJET IMI/EIT_GT_ENPC/"
 
 def label_centroid(stats, labels):
     centroids_label = []
@@ -23,7 +26,7 @@ STATS =  []
 
 for k in range(4,14):
     
-    img = cv2.imread("C:/Users/grego/github/EIT_GT_ENPC/raw/achilles tendon rupture/" + str(k) +".jpeg", cv2.IMREAD_GRAYSCALE) 
+    img = cv2.imread(local_path + "raw/achilles tendon rupture/" + str(k) +".jpeg", cv2.IMREAD_GRAYSCALE)
     #put a filter
     img = threshold(img,100)
 
@@ -85,7 +88,7 @@ for i in range(len(CENTERS)):
     
     
 
-IMAGE_SEG = []
+IMAGE_SEG = [] #List of pictures that have for each pixels their label
 for j in range(len(CENTERS)): 
     if j == indice_train:
         continue
@@ -99,11 +102,11 @@ for j in range(len(CENTERS)):
         image_1[image_1 == labels_1[i]] = NEIGHBOURS[j][i]
     
     IMAGE_SEG.append(image_1)
-    # cv2.imshow('Result for image '+ str(j), image_1)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    cv2.imshow('Result for image '+ str(j), image_1)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     
-    cv2.imwrite("C:/Users/grego/github/EIT_GT_ENPC/achilles_tendon_rupture_TIFF/"+str(i+4) + ".tif", image_1)
+    cv2.imwrite(local_path + "achilles_tendon_rupture_TIFF/"+str(i+4) + ".tif", image_1)
     
     print(len(np.unique(image_1)))
     
