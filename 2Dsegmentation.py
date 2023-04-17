@@ -38,7 +38,7 @@ for k in range(4,14):
     STATS.append(stats)
     
     
-indice_train = np.argmax(NB_CENTERS)
+indice_train = 0
 
 img_train = N_IMG[indice_train]
 
@@ -48,10 +48,6 @@ cv2.destroyAllWindows()
 
 
 centroids_train = np.array(CENTERS[indice_train], dtype=np.float32)
-
-#labels_train = LABELS[indice_train]
-
-#labels_train = np.arange(len(centroids_train), dtype=np.float32)
 
 labels_train = np.array(LABELS[indice_train], dtype=np.float32)
 
@@ -83,6 +79,20 @@ for i in range(len(CENTERS)):
     RESULTS.append(results)
     NEIGHBOURS.append(neighbours)
     
+    indice_train = i
+    
+    centroids_train = np.array(CENTERS[indice_train], dtype=np.float32)
+    
+
+    labels_train = np.array(LABELS[indice_train], dtype=np.float32)
+
+    # Create a K-NN model
+    model = cv2.ml.KNearest_create()
+
+    # Train the model on the train data
+    model.train(centroids_train, cv2.ml.ROW_SAMPLE, labels_train)
+    
+    
     
 
 IMAGE_SEG = []
@@ -99,16 +109,13 @@ for j in range(len(CENTERS)):
         image_1[image_1 == labels_1[i]] = NEIGHBOURS[j][i]
     
     IMAGE_SEG.append(image_1)
-    # cv2.imshow('Result for image '+ str(j), image_1)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    cv2.imshow('Result for image '+ str(j), image_1)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     
     cv2.imwrite("C:/Users/grego/github/EIT_GT_ENPC/achilles_tendon_rupture_TIFF/"+str(i+4) + ".tif", image_1)
     
     print(len(np.unique(image_1)))
-    
-    
-
 
 
 
