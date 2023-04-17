@@ -63,7 +63,7 @@ DIST = []
 RESULTS = []
 NEIGHBOURS = []
 
-for i in range(len(CENTERS)): 
+for i in range(0,len(CENTERS)): 
     
     # Convert input data to correct data type and reshape
     test_samples = np.array(CENTERS[i], dtype=np.float32)
@@ -82,9 +82,8 @@ for i in range(len(CENTERS)):
     indice_train = i
     
     centroids_train = np.array(CENTERS[indice_train], dtype=np.float32)
-    
 
-    labels_train = np.array(LABELS[indice_train], dtype=np.float32)
+    labels_train = np.array(neighbours, dtype=np.float32)
 
     # Create a K-NN model
     model = cv2.ml.KNearest_create()

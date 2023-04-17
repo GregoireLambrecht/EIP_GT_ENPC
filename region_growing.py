@@ -59,7 +59,7 @@ img = threshold(img,110)
 plt.imshow(img)
 
 #segmentation
-n_img,labels,stats,  centroids = segmentationbis(img)
+n_img,labels,stats,  centroids = segmentation(img)
 
 print(len(centroids))
 
