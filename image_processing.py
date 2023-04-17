@@ -1,6 +1,10 @@
 import cv2
 import numpy as np
 
+##############################################################################
+#RUN BEFORE RUNING OTHERS FILES
+##############################################################################
+
 
 #Put an image in black and white
 def put_in_white_black(img):

@@ -28,7 +28,7 @@ for k in range(4,14):
     img = threshold(img,100)
 
     #segmentation
-    n_img,labels, stats, centroids = segmentationbis(img, show = False)
+    n_img,labels, stats, centroids = segmentation(img, show = False)
     
     labels = label_centroid(stats[1:], n_img[1:])
     N_IMG.append(n_img)
@@ -38,11 +38,11 @@ for k in range(4,14):
     STATS.append(stats)
     
     
-indice_train = np.argmin(NB_CENTERS)
+indice_train = np.argmax(NB_CENTERS)
 
 img_train = N_IMG[indice_train]
 
-cv2.imshow('Result', img_train)
+cv2.imshow('Image-Reference', img_train)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
@@ -58,6 +58,9 @@ labels_train = np.array(LABELS[indice_train], dtype=np.float32)
 # Create a K-NN model
 model = cv2.ml.KNearest_create()
 
+# Train the model on the train data
+model.train(centroids_train, cv2.ml.ROW_SAMPLE, labels_train)
+
 k=1
 
 DIST = []
@@ -65,8 +68,6 @@ RESULTS = []
 NEIGHBOURS = []
 
 for i in range(len(CENTERS)): 
-    # Train the model on the FIRST data
-    model.train(centroids_train, cv2.ml.ROW_SAMPLE, labels_train)
     
     # Convert input data to correct data type and reshape
     test_samples = np.array(CENTERS[i], dtype=np.float32)
@@ -84,7 +85,7 @@ for i in range(len(CENTERS)):
     
     
 
-
+IMAGE_SEG = []
 for j in range(len(CENTERS)): 
     if j == indice_train:
         continue
@@ -95,13 +96,19 @@ for j in range(len(CENTERS)):
     labels_1 = LABELS[j]
     
     for i in range(len(centroids_1)): 
-        image_1[image_1 == labels_1[i]] = RESULTS[j][i]
+        image_1[image_1 == labels_1[i]] = NEIGHBOURS[j][i]
     
-    cv2.imshow('Result', image_1)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    IMAGE_SEG.append(image_1)
+    # cv2.imshow('Result for image '+ str(j), image_1)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+    
+    cv2.imwrite("C:/Users/grego/github/EIT_GT_ENPC/achilles_tendon_rupture_TIFF/"+str(i+4) + ".tif", image_1)
     
     print(len(np.unique(image_1)))
+    
+    
+
 
 
 
