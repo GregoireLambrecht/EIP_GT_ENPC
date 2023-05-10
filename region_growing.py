@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
 #ATTENTION ////////////////////////////////////////////////////////////////////
 #YOU HAVE TO RUN image_processing.py before runing this file
 #////////////////////////////////////////////////////////////////////////////// 
@@ -31,9 +32,10 @@ def find_surface(img,seed_point,fill_color = 100, show = False):
 
 #PERFORM REGION GROWING 
 #img : 2D array containing only 0 and 255
-def segmentation(img, show = True): 
-    img = erode(img,kern = 7,  iteration=1)                                    # add erosion step
-    img = dilation(img, kern = 5, iteration = 1)                               # add dilation step
+def segmentation(img, show = True, process = True, er_kern = 7, di_kern = 5): 
+    if process:
+        img = erode(img,kern = er_kern,  iteration=1)                                    # add erosion step
+        img = dilation(img, kern = di_kern, iteration = 1)                               # add dilation step
     # Perform region growing
     connectivity = 4                                                       #4 or 8 : impact the definition of two nearby pixel                     
     num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(img, connectivity, cv2.CV_32S)
@@ -54,6 +56,7 @@ def segmentation(img, show = True):
 # Load image as grayscale
 img = cv2.imread("C:/Users/grego/github/EIT_GT_ENPC/6.jpeg", cv2.IMREAD_GRAYSCALE) 
 #put a filter
+
 img = threshold(img,110)
 
 plt.imshow(img)
@@ -69,4 +72,5 @@ print(len(centroids))
         
                 
 
+            
             
