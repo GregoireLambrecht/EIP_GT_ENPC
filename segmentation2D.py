@@ -45,9 +45,9 @@ indice_train = np.argmax(NB_CENTERS)
 
 img_train = N_IMG[indice_train]
 
-cv2.imshow('Image-Reference', img_train)
+'''cv2.imshow('Image-Reference', img_train)
 cv2.waitKey(0)
-cv2.destroyAllWindows()
+cv2.destroyAllWindows()'''
 
 
 centroids_train = np.array(CENTERS[indice_train], dtype=np.float32)
@@ -102,13 +102,13 @@ for j in range(len(CENTERS)):
         image_1[image_1 == labels_1[i]] = NEIGHBOURS[j][i]
     
     IMAGE_SEG.append(image_1)
-    cv2.imshow('Result for image '+ str(j), image_1)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #cv2.imshow('Result for image '+ str(j), image_1)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
     
-    cv2.imwrite(local_path + "achilles_tendon_rupture_TIFF/"+str(i+4) + ".tif", image_1)
+    cv2.imwrite(local_path + "achilles_tendon_rupture_TIFF/"+str(j+4) + ".tif", image_1)
     
-    print(len(np.unique(image_1)))
+    #print(len(np.unique(image_1)))
     
     
 

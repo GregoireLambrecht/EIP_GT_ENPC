@@ -33,7 +33,7 @@ def find_surface(img,seed_point,fill_color = 100, show = False):
 
 #PERFORM REGION GROWING 
 #img : 2D array containing only 0 and 255
-def segmentation(img, show = True): 
+def segmentation(img, show = False):
     img = erode(img,kern = 7,  iteration=1)                                    # add erosion step
     img = dilation(img, kern = 5, iteration = 1)                               # add dilation step
     # Perform region growing
